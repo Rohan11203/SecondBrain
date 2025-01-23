@@ -17,27 +17,37 @@ const db_1 = require("./db");
 const mongoose_1 = __importDefault(require("mongoose"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const auth_1 = require("./auth");
+const auth_1 = require("./auth/auth");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const validate_1 = require("./validators/validate");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const { username, email, password } = req.body;
+    const parsedData = validate_1.validateUserData.safeParse(req.body);
+    if (!parsedData.success) {
+        console.log("Validation Failed", parsedData);
+        return res.status(400).json({
+            message: "Validation Failed",
+        });
+    }
+    const hashedPassword = yield bcrypt_1.default.hash(password, 5);
     try {
         yield db_1.UserModel.create({
             username,
             email,
-            password,
+            password: hashedPassword,
         });
-        res.json({
+        res.status(201).json({
+            success: true,
             message: "Signin Succesfull",
         });
     }
     catch (error) {
         console.log("Error", error);
-        res.json({
-            message: error
+        res.status(500).json({
+            message: "Email Already exists",
         });
     }
 }));
@@ -49,10 +59,27 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
             throw new Error("JWT secret is not defined in environment variables");
         }
         const response = yield db_1.UserModel.findOne({ email });
+        if (!response) {
+            return res.status(403).json({
+                message: "Email does not exists"
+            });
+        }
+        const passwordMatch = bcrypt_1.default.compareSync(password, response.password);
+        if (!passwordMatch) {
+            return res.status(403).json({
+                message: "Incorrect Password"
+            });
+        }
         const token = jsonwebtoken_1.default.sign({
             userId: response === null || response === void 0 ? void 0 : response._id
         }, jwtSecret);
-        res.json({
+        // Store it in cookie
+        // return res.status(200).cookie("token", token, { httpOnly: true }).json({
+        //   success: true,
+        //   token:token,
+        //   message: "Signup succesfull"
+        // })
+        return res.status(200).json({
             success: true,
             token: token,
             message: "Signup succesfull"
@@ -60,32 +87,75 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (error) {
         console.log("Error", error);
-        return res.json({
+        return res.status(401).json({
             message: "Invalid email or password",
         });
     }
 }));
-app.get("/api/v1/content", auth_1.UserAuth, (req, res) => {
-    res.json({
-        message: "All content"
-    });
-});
-app.post("/api/v1/add-content", (req, res) => {
-    res.json({
-        message: "Content added"
-    });
-});
-app.delete("/api/v1/delete", (req, res) => {
-    res.json({
-        message: "Content deleted succesfully"
-    });
-});
-app.post("/api/v1/share", (req, res) => {
+app.post("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { title, type, link, tags } = req.body;
+    try {
+        const response = yield db_1.ContentModel.create({
+            title,
+            type,
+            link,
+            tags,
+            userId: req.userId,
+        });
+        if (!response) {
+            return res.status(401).json({
+                message: "Failed to add content"
+            });
+        }
+        res.json({
+            message: "Content added Succesfully"
+        });
+    }
+    catch (error) {
+        return res.status(403).json({
+            Error: "Error While adding content", error
+        });
+    }
+}));
+app.get("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const contentData = yield db_1.ContentModel.find({ userId: req.userId });
+        res.status(201).json({
+            message: "All content",
+            contentData,
+        });
+    }
+    catch (error) {
+        return res.status(401).json({
+            Error: "Error while getting content", error
+        });
+    }
+}));
+app.delete("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { contentId } = req.body;
+    try {
+        const response = yield db_1.ContentModel.findByIdAndDelete(contentId);
+        if (!response) {
+            return res.status(401).json({
+                message: "Invalid content Id"
+            });
+        }
+        res.json({
+            message: "Content deleted succesfully"
+        });
+    }
+    catch (error) {
+        return res.status(401).json({
+            Error: "Error while Deleting", error
+        });
+    }
+}));
+app.post("/api/v1/brain/share", (req, res) => {
     res.json({
         message: "sharable Link"
     });
 });
-app.get("/api/v1/:id", (req, res) => {
+app.get("/api/v1//brain/:shareLink", (req, res) => {
     res.json({
         message: "Content of another user"
     });

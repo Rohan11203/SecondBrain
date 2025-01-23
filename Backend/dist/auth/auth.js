@@ -27,7 +27,7 @@ function UserAuth(req, res, next) {
         }
     }
     catch (error) {
-        console.error('JWT Verification Error:');
+        console.error('JWT Verification Error:', error);
         res.status(401).json({ message: 'Unauthorized access.' });
     }
 }
