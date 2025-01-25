@@ -21,9 +21,11 @@ const auth_1 = require("./auth/auth");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const validate_1 = require("./validators/validate");
 const utlis_1 = require("./utlis/utlis");
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password } = req.body;
     const parsedData = validate_1.validateUserData.safeParse(req.body);

@@ -8,10 +8,12 @@ import bcrypt from 'bcrypt'
 import { validateUserData } from './validators/validate';
 import { any } from 'zod';
 import { random } from './utlis/utlis';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
 app.use(express.json())
+app.use(cors())
 
 
 app.post("/api/v1/signin", async (req:any,res:any) => {
