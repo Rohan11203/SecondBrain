@@ -1,16 +1,21 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { OnRegister } from "../api/auth";
 
+export interface RegisterationData {
+  username?: string;
+  email: string;
+  password: string;
+}
 export const Register = () => {
-  const [values,setValues] = useState({
+  const [values,setValues] = useState<RegisterationData>({
     username: "",
     email: "",
     password: "",
   })
-  function handleChange(e:any){
+  function handleChange(e:React.ChangeEvent<HTMLInputElement>){
     setValues({...values, [e.target.name]: e.target.value})
   }
-  async function onSubmit(e:any){
+  async function onSubmit(e:React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     console.log(values)
     await OnRegister(values)

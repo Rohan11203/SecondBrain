@@ -1,13 +1,10 @@
 import './App.css'
-import { Register } from './pages/Register'
+import { AppRoutes } from './routes/Approutes'
 
 function App() {
 
   return (
-    <>
-    {/* <Button variant='secondary' size='lg' text='Button' startIcon={<LogoutIcon />} onclick={() => {alert("hellp")}} className=''/> */}
-  <Register />
-    </>
+    <AppRoutes />
   )
 }
 
