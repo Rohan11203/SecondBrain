@@ -5,8 +5,9 @@ export interface ButtonProps {
   size: "sm" | "md" | "lg";
   text: string;
   startIcon?: ReactElement;
-  onclick: () => void;
-  className: string;
+  endIcon?: ReactElement;
+  onclick?: () => void;
+  className?: string;
 }
 const sizeStyles = {
   sm: "px-2 py-1 text-sm rounded-sm",
@@ -32,6 +33,9 @@ export const Button = (props: ButtonProps) => {
           <div className="pr-2 pl-2">
           {props.text}
           </div>
+          {props.endIcon && 
+            React.cloneElement(props.endIcon, {size: props.size})
+          }
         </div>
       </button>
     </>
