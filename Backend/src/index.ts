@@ -210,14 +210,13 @@ app.get("/api/v1/brain/:shareLink" , async (req:any,res:any) => {
       userId: link?.userId
     })
 
-    console.log(link)
     const user = await UserModel.findOne({
       _id: link?.userId
     })
 
     if(!user){
       res.status(411).json({
-        message: "user not found, error should ideally not happen"
+        message: "user not found"
     })
     return;
     }

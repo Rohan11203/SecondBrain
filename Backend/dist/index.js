@@ -195,13 +195,12 @@ app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void
     const content = yield db_1.ContentModel.find({
         userId: link === null || link === void 0 ? void 0 : link.userId
     });
-    console.log(link);
     const user = yield db_1.UserModel.findOne({
         _id: link === null || link === void 0 ? void 0 : link.userId
     });
     if (!user) {
         res.status(411).json({
-            message: "user not found, error should ideally not happen"
+            message: "user not found"
         });
         return;
     }
