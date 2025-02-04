@@ -1,34 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddContent, GetContent } from "../api/auth";
 import { Card } from "../components/Card";
 import { Button } from "../components/ui/Button";
 import { PlusIcon, ShareIcon, X } from "lucide-react";
+import { SideBar } from "../components/SideBar";
 
+enum ContentType {
+  YOUTUBE = "youtube",
+  TWITTER = "twitter",
+}
 export const Dashboard = () => {
-  const [data, setData] = useState({
-    title: "",
-    type: "",
-    link: "",
-  });
+  const title = useRef<any>();
+  const link = useRef<any>();
+  const [type , setType] = useState<ContentType>(ContentType.YOUTUBE);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function openForm() {
     setIsFormVisible((isFormVisible) => !isFormVisible);
   }
   async function handleClick() {
+    const data = {
+      title: title.current?.value,
+      type: type,
+      link: link.current?.value,
+    };
     await AddContent(data);
     setIsFormVisible(false);
-    setData({ title: "", type: "", link: "" });
+     title.current.value = "";
+    link.current.value = "";
   }
-  const handleOnChange = (e: any) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
 
   const [content, setContent] = useState([]);
 
   useEffect(() => {
-    fetchContent()
-  },[content]);
+    fetchContent();
+    
+  },[]);
 
   const fetchContent = async() => {
     const res = await GetContent();
@@ -39,12 +46,16 @@ export const Dashboard = () => {
   
 
   return (
-    <div className="p-4 relative">
+    <div className="flex">
+      <div >
+      <SideBar />
+      </div>
+      <div className="p-4 relative ">
+      <div className="flex gap-2 p-2">
       <Button
         variant="secondary"
         text="ShareBrain"
         size="md"
-        className="m-2"
         startIcon={<ShareIcon height={16} />}
       ></Button>
 
@@ -55,41 +66,38 @@ export const Dashboard = () => {
         startIcon={<PlusIcon height={16} />}
         onClick={openForm}
       />
+      </div>
       {isFormVisible && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
             <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"
+              className="absolute top-0 right-1 text-gray-500 hover:text-red-500 transition-colors"
               onClick={openForm}
             >
-              <X size={20} />
+              <X size={22} />
             </button>
 
             <div className="space-y-4">
               <input
                 type="text"
                 placeholder="Title"
-                value={data.title}
+                ref={title}                
                 name="title"
-                onChange={handleOnChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
 
-              <input
-                type="text"
-                placeholder="Type"
-                value={data.type}
-                name="type"
-                onChange={handleOnChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <div className="flex gap-2 py-2">
+                <Button className="py-2" size="sm" text="Youtube" variant={type === ContentType.YOUTUBE ? "primary" : "secondary"} onClick={() => setType(ContentType.YOUTUBE)} />
+                <Button size="sm" text="Twitter" variant={type === ContentType.TWITTER? "primary" : "secondary"} onClick={() => {
+                  setType(ContentType.TWITTER);
+                }} />
+              </div>
 
               <input
                 type="text"
                 placeholder="Link"
-                value={data.link}
                 name="link"
-                onChange={handleOnChange}
+                ref={link}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
 
@@ -110,6 +118,7 @@ export const Dashboard = () => {
               content.map((item:any, index) => (
                 <Card
                   key={index}
+                  contentId={item._id}
                   type={item.type}
                   title={item.title}
                   link={item.link}
@@ -127,6 +136,7 @@ export const Dashboard = () => {
           title="ndnj"
           link="https://www.youtube.com/watch?v=_zYqdyX1ZTo"
         /> */}
+      </div>
       </div>
     </div>
   );

@@ -1,23 +1,28 @@
 import { RegisterationData } from "./Register";
 import { OnLogin } from "../api/auth";
 import SideImage from "../assets/wallpaper.jpg";
-import { useState } from "react";
+import { useRef } from "react";
 import { EmailIcon } from "../icons/EmailIcon";
 import { PasswordIcon } from "../icons/PasswordIcon";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const [values, setValues] = useState<RegisterationData>({
-    email: "",
-    password: "",
-  });
-
-  function handleChange(e: any) {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  }
+  
+  const email = useRef<any>();
+  const password = useRef<any>();
+  const navigate = useNavigate();
+ 
 
   async function onSubmit(e: any) {
     e.preventDefault();
-    await OnLogin(values);
+    const values: RegisterationData = {
+      email: email.current?.value,
+      password: password.current.value,
+    };
+    const response = await OnLogin(values);
+    const jwt = response.data.token;
+    localStorage.setItem("token", jwt);
+    navigate("/dashboard");
     console.log(values);
   }
   return (
@@ -42,8 +47,7 @@ export const Login = () => {
             type="email"
             name="email"
             placeholder="Email"
-            value={values.email}
-            onChange={handleChange}
+            ref={email}
           />
           </div>
          <div className="relative w-full">
@@ -53,8 +57,7 @@ export const Login = () => {
             type="password"
             name="password"
             placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
+            ref={password}
           />
          </div>
           <button

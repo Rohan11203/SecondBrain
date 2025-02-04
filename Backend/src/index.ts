@@ -140,7 +140,8 @@ app.get("/api/v1/content", UserAuth, async (req:any,res:any) => {
 })
 
 app.delete("/api/v1/content" , UserAuth, async (req:any,res:any) => {
-  const { contentId } = req.body;
+  const contentId  = req.body.contentId;
+  console.log(contentId)
   try {
     const response = await ContentModel.findByIdAndDelete(contentId);
 

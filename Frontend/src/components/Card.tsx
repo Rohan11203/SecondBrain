@@ -1,15 +1,23 @@
 import { DeleteIcon, DotSquareIcon, Share } from "lucide-react";
-import { GetContent } from "../api/auth";
-import { useEffect, useState } from "react";
+import { DeleteContent } from "../api/auth";
 
 interface CardProps {
   type: "youtube" | "twitter";
   title: string;
   link: string;
+  contentId?: string;
 }
 
-export const Card = ({ type, title, link }:CardProps) => {
+export const Card = ({ type, title, link,contentId }:CardProps) => {
 
+   const  deleteContent = async () => {
+    console.log(contentId)
+    if(!contentId){
+      console.error(" Content Id is missing")
+      return;
+    }
+    await DeleteContent(contentId)
+  }
   
   return (
     <div>
@@ -26,7 +34,7 @@ export const Card = ({ type, title, link }:CardProps) => {
             <Share />
           </div>
           <div className="text-gray-500">
-            <DeleteIcon />
+            <DeleteIcon onClick={deleteContent}/>
           </div>
         </div>
       </div>

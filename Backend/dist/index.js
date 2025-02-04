@@ -135,7 +135,8 @@ app.get("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void
     }
 }));
 app.delete("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { contentId } = req.body;
+    const contentId = req.body.contentId;
+    console.log(contentId);
     try {
         const response = yield db_1.ContentModel.findByIdAndDelete(contentId);
         if (!response) {

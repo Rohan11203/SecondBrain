@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useRef } from "react";
 import { OnRegister } from "../api/auth";
 import SideImage from "../assets/wallpaper.jpg";
 import { EmailIcon } from "../icons/EmailIcon";
@@ -6,21 +6,22 @@ import { PasswordIcon } from "../icons/PasswordIcon";
 import { UserIcon } from "../icons/UserIcon";
 
 export interface RegisterationData {
-  username?: string;
-  email: string;
-  password: string;
+  username?:   string;
+  email:   string; 
+  password:  string;
 }
 export const Register = () => {
-  const [values, setValues] = useState<RegisterationData>({
-    username: "",
-    email: "",
-    password: "",
-  });
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  }
+  const username = useRef<any>();
+  const password = useRef<any>();
+  const email = useRef<any>();
+
   async function onSubmit(e: any) {
     e.preventDefault();
+    const values: RegisterationData = {
+      email: email.current?.value,
+      password: password.current?.value,
+      username: username.current?.value,
+    };
     console.log(values);
     await OnRegister(values);
   }
@@ -49,8 +50,7 @@ export const Register = () => {
               type="email"
               name="email"
               placeholder="Email"
-              value={values.email}
-              onChange={handleChange}
+              ref={email}
             />
           </div>
 
@@ -61,9 +61,8 @@ export const Register = () => {
             type="text"
             name="username"
             placeholder="Username"
-            value={values.username}
-            onChange={handleChange}
-          />
+            ref={username}
+/>
           </div>
           <div className="relative w-full">
             <PasswordIcon />
@@ -72,8 +71,7 @@ export const Register = () => {
             type="password"
             name="password"
             placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
+            ref={password}
           />
           </div>
           <button
