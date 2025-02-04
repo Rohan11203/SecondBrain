@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkModel = exports.ContentModel = exports.TagsModel = exports.UserModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const contentTypes = ['image', 'video', 'article', 'audio'];
+const contentTypes = ['youtube', 'twitter'];
 const UserSchema = new mongoose_1.default.Schema({
     username: { type: String, required: true },
     email: { type: String, unique: true, required: true },

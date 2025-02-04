@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const contentTypes = ['image', 'video', 'article', 'audio'];
+const contentTypes = ['youtube', 'twitter'];
 
 const UserSchema = new mongoose.Schema({
   username: { type: String,required: true },

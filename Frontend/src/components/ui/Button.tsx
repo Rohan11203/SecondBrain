@@ -6,7 +6,7 @@ export interface ButtonProps {
   text: string;
   startIcon?: ReactElement;
   endIcon?: ReactElement;
-  onclick?: () => void;
+  onClick?: () => void;
   className?: string;
 }
 const sizeStyles = {
@@ -23,7 +23,7 @@ const VarientStyles = {
 export const Button = (props: ButtonProps) => {
   return (
     <>
-      <button className={`${sizeStyles[props.size]} ${VarientStyles[props.variant]}`}>
+      <button className={` ${props.className} ${sizeStyles[props.size]} ${VarientStyles[props.variant]}`} onClick={props.onClick} >
         <div className="flex items-center">
           <div>
           {props.startIcon && 
