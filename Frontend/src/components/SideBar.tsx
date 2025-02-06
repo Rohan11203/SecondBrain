@@ -3,7 +3,7 @@ import { SideBarItem } from "./SideBarItem"
 
 export const SideBar = () => {
   return (
-    <div className=" h-screen w-72 p-4 border border-gray-300 rounded-md ">
+    <div className=" h-screen w-72 p-4 border-r-1 border-gray-300 rounded-md ">
       <div className="flex gap-2 items-center p-2 border border-gray-300 rounded-md ">
         <BrainCircuitIcon />
       <h1 className="text-2xl font-semibold">BrainlY</h1>

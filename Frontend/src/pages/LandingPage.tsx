@@ -1,4 +1,4 @@
-import { Brain, Sparkles, Lock, ArrowRight, Sparkle } from "lucide-react";
+import { Brain,  ArrowRight, Sparkle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 
 export const LandingPage = () => {

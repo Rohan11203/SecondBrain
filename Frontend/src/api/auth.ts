@@ -37,3 +37,17 @@ export async function DeleteContent(contentId:string){
   })
 }
 
+export async function ShareContent(share:boolean){
+  const headers = {
+    "Authorization": localStorage.getItem("token")
+  };
+  return await axios.post('http://localhost:3000/api/v1/brain/share',{share},{headers})
+}
+
+export async function GetSharedContent(shreUrl: string){
+  const headers = {
+    "Authorization": localStorage.getItem("token")
+  };
+  return await axios.get(`http://localhost:3000/api/v1/brain/${shreUrl}`,{headers})
+}
+

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { AddContent, GetContent } from "../api/auth";
+import { AddContent, ShareContent } from "../api/auth";
 import { Card } from "../components/Card";
 import { Button } from "../components/ui/Button";
 import { PlusIcon, ShareIcon, X } from "lucide-react";
 import { SideBar } from "../components/SideBar";
+import { useContent } from "../hooks/useContent";
 
 enum ContentType {
   YOUTUBE = "youtube",
@@ -29,34 +30,31 @@ export const Dashboard = () => {
      title.current.value = "";
     link.current.value = "";
   }
-
-  const [content, setContent] = useState([]);
+  const {content, fetchContent} = useContent();
 
   useEffect(() => {
-    fetchContent();
-    
-  },[]);
-
-  const fetchContent = async() => {
-    const res = await GetContent();
-    console.log(res.data.contentData); 
-    setContent(res.data.contentData);
-  }
-
+    fetchContent();    
+  },[isFormVisible]);
   
 
   return (
-    <div className="flex">
-      <div >
+    <div className="flex ">
+      <div className="fixed">
       <SideBar />
-      </div>
-      <div className="p-4 relative ">
+    </div>
+      <div className="ml-70 p-6 relative bg-gray-200 ">
       <div className="flex gap-2 p-2">
       <Button
         variant="secondary"
         text="ShareBrain"
         size="md"
         startIcon={<ShareIcon height={16} />}
+        onClick={async () => {
+          const response = await ShareContent(true);
+          const shareUrl = `http://localhost:5173/brain/${response.data.hash}`;
+          window.open(shareUrl, "_blank");
+
+        }}
       ></Button>
 
       <Button
@@ -112,7 +110,7 @@ export const Dashboard = () => {
         </div>
       )}
 
-      <div className="flex gap-10">
+      <div className="flex gap-10 flex-wrap">
         
           {
               content.map((item:any, index) => (

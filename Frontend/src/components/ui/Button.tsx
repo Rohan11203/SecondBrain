@@ -23,7 +23,7 @@ const VarientStyles = {
 export const Button = (props: ButtonProps) => {
   return (
     <>
-      <button className={` ${props.className} ${sizeStyles[props.size]} ${VarientStyles[props.variant]}`} onClick={props.onClick} >
+      <button className={`cursor-pointer ${props.className} ${sizeStyles[props.size]} ${VarientStyles[props.variant]}`} onClick={props.onClick} >
         <div className="flex items-center">
           <div>
           {props.startIcon && 
