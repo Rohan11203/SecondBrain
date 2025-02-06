@@ -42,7 +42,7 @@ export const Dashboard = () => {
       <div className="fixed">
       <SideBar />
     </div>
-      <div className="ml-70 p-6 relative bg-gray-200 ">
+      <div className="ml-72  w-screen p-6 relative bg-gray-200 ">
       <div className="flex gap-2 p-2">
       <Button
         variant="secondary"

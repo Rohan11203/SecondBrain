@@ -141,9 +141,14 @@ app.get("/api/v1/content", UserAuth, async (req:any,res:any) => {
 
 app.delete("/api/v1/content" , UserAuth, async (req:any,res:any) => {
   const contentId  = req.body.contentId;
-  console.log(contentId)
+  console.log(contentId);
+  console.log(req.userId)
   try {
-    const response = await ContentModel.findByIdAndDelete(contentId);
+    const response = await ContentModel.findOneAndDelete({
+      _id : contentId,
+      userId:req.userId
+    });
+
 
     if(!response){
       return res.status(401).json({

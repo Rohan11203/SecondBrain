@@ -137,8 +137,12 @@ app.get("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void
 app.delete("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
     console.log(contentId);
+    console.log(req.userId);
     try {
-        const response = yield db_1.ContentModel.findByIdAndDelete(contentId);
+        const response = yield db_1.ContentModel.findOneAndDelete({
+            _id: contentId,
+            userId: req.userId
+        });
         if (!response) {
             return res.status(401).json({
                 message: "Invalid content Id"
