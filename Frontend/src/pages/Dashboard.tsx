@@ -42,7 +42,7 @@ export const Dashboard = () => {
       <div className="fixed">
       <SideBar />
     </div>
-      <div className="ml-72  w-screen p-6 relative bg-gray-200 ">
+      <div className="ml-72  w-screen p-6 relative bg-gray-100 ">
       <div className="flex gap-2 p-2">
       <Button
         variant="secondary"
@@ -66,10 +66,10 @@ export const Dashboard = () => {
       />
       </div>
       {isFormVisible && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+        <div className="fixed inset-0  bg-black/50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8 relative">
             <button
-              className="absolute top-0 right-1 text-gray-500 hover:text-red-500 transition-colors"
+              className="absolute top-0 right-0 p-2 text-gray-500 hover:text-red-500 transition-colors"
               onClick={openForm}
             >
               <X size={22} />
@@ -101,7 +101,7 @@ export const Dashboard = () => {
 
               <button
                 onClick={handleClick}
-                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
               >
                 Add Content
               </button>
@@ -123,17 +123,6 @@ export const Dashboard = () => {
                 />
               ))
           }
-        
-        {/* <Card
-          type="twitter"
-          title="ndnj"
-          link="https://x.com/mannupaaji/status/1886656846825447776"
-        />
-        <Card
-          type="youtube"
-          title="ndnj"
-          link="https://www.youtube.com/watch?v=_zYqdyX1ZTo"
-        /> */}
       </div>
       </div>
     </div>

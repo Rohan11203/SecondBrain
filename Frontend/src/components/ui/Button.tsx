@@ -11,13 +11,13 @@ export interface ButtonProps {
 }
 const sizeStyles = {
   sm: "px-2 py-1 text-sm rounded-sm",
-  md: "px-4 py-2 text-md rounded-md",
+  md: "px-2 py-4 text-md rounded-xl",
   lg: "px-8 py-4 text-xl rounded-xl"
 }
 
 const VarientStyles = {
-  primary: "bg-amber-500 hover:bg-amber-700 text-white",
-  secondary: "bg-gray-300 hover:bg-gray-500 text-gray-800"
+  primary: "bg-gradient-to-t from-[#2d2d2d] to-[#3c3c3c] hover:bg-amber-700 text-white",
+  secondary: "bg-gray-100 hover:bg-gray-200 border"
 }
 
 export const Button = (props: ButtonProps) => {
