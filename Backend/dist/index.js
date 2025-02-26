@@ -95,6 +95,20 @@ app.post("/api/v1/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
     }
 }));
+app.delete("/api/v1/logout", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successfully",
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+            message: error.message,
+        });
+    }
+}));
 app.post("/api/v1/content", auth_1.UserAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, type, link, tags } = req.body;
     try {

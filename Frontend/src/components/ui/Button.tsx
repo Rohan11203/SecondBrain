@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 export interface ButtonProps {
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "danger";
   size: "sm" | "md" | "lg";
   text: string;
   startIcon?: ReactElement;
@@ -11,13 +11,14 @@ export interface ButtonProps {
 }
 const sizeStyles = {
   sm: "px-2 py-1 text-sm rounded-sm",
-  md: "px-2 py-4 text-md rounded-xl",
+  md: "px-2 py-2 text-md rounded-2xl",
   lg: "px-8 py-4 text-xl rounded-xl"
 }
 
 const VarientStyles = {
   primary: "bg-gradient-to-t from-[#2d2d2d] to-[#3c3c3c] hover:bg-amber-700 text-white",
-  secondary: "bg-gray-100 hover:bg-gray-200 border"
+  secondary: "bg-gray-100 hover:bg-gray-200 border",
+  danger: "bg-red-700 hover:bg-red-500 text-white"
 }
 
 export const Button = (props: ButtonProps) => {

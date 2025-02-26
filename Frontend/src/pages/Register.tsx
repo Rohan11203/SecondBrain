@@ -26,18 +26,12 @@ export const Register = () => {
     await OnRegister(values);
   }
   return (
-    <div className="flex h-screen w-full ">
+    <div className="flex h-screen w-full justify-center">
       {/* Image Section */}
-      <div className="w-1/2 h-full relative">
-        <img
-          className="h-full w-full object-cover"
-          src={SideImage}
-          alt="SideImage"
-        />
-      </div>
+     
 
       {/* Form Section */}
-      <div className="w-1/3 m-28 flex flex-col justify-center items-center  shadow-md">
+      <div className="w-1/3 m-28 flex flex-col justify-center items-center bg-gray-100  shadow-md">
         <h1 className="text-[#1F41BB] text-2xl font-bold">Create Account</h1>
         <p className="pt-2 text-center font-semibold">
           Create an account to explore all the existing jobs

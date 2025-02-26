@@ -97,6 +97,20 @@ app.post("/api/v1/signup", async (req:any,res:any) =>{
   
 })
 
+app.delete("/api/v1/logout",UserAuth, async (req:any,res:any) => {
+  try{
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+  })
+  }catch(error:any){
+    console.log(error.message);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+})
+
 app.post("/api/v1/content" , UserAuth, async (req:any,res:any) => {
   const { title, type, link,tags } = req.body;
 
