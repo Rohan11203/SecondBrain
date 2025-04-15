@@ -18,8 +18,8 @@ export const Navbar = () => {
         <div className="flex gap-2 font-bold text-white p-2 pr-24">
           <Brain /> BrainBox
         </div>
-        <NavLink to={"/dashboard"} className=" bg-green-400 p-2 rounded-xl font-semibold cursor-pointer">
-          Join now
+        <NavLink to={"/login"} className=" bg-green-400 p-2 rounded-xl font-semibold cursor-pointer">
+          Login now
         </NavLink>
       </motion.div>
     </div>

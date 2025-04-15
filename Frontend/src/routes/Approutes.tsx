@@ -4,7 +4,6 @@ import { Login } from "../pages/Login"
 import { Dashboard } from "../pages/Dashboard"
 import {LandingPage} from "../pages/LandingPage"
 import { ShareBrain} from '../pages/ShareBrain'
-import { Children, useState } from "react"
 
 const ProtectedRoute = ({ children }:any) => {
   const isAuthenticated = localStorage.getItem('token') ? true : false;

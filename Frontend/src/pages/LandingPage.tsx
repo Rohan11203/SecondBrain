@@ -91,23 +91,6 @@ export const LandingPage = () => {
             />
           </div>
         </div>
-
-        <div className="flex">
-        <motion.div
-        initial={{ opacity: 0, y:0 }}
-        whileInView={{ opacity:1, y:-10 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        className=" bg-blue-600 my-20 w-1/2 mx-auto min-h-[350px]">
-dd
-        </motion.div>
-          <motion.div
-        initial={{ opacity: 0, y:0 }}
-        whileInView={{ opacity:1, y:-10 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
-        className=" bg-blue-200 my-20 w-1/2 mx-auto min-h-[350px]">
-dd
-        </motion.div>
-        </div>
       </div>
     </>
   );

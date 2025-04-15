@@ -68,6 +68,9 @@ export const Register = () => {
             ref={password}
           />
           </div>
+          <div className="flex items-center justify-center">
+            <a href="/login" className="underline cursor-pointer">Already have an account</a>
+          </div>
           <button
             className="mt-4 w-full bg-[#1F41BB] text-white py-3 rounded-md font-semibold hover:bg-[#163594] transition"
             onClick={onSubmit}
